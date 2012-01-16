@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="astrosModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="astrosEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="league_adjustment" EntityType="astrosModel.league_adjustment" />
+    <EntitySet Name="park_factor" EntityType="astrosModel.park_factor" />
+    <EntitySet Name="player_splits" EntityType="astrosModel.player_splits" />
+    <EntitySet Name="player_stats" EntityType="astrosModel.player_stats" />
+    <EntitySet Name="rosters" EntityType="astrosModel.roster" />
+    <EntitySet Name="rosters_lahman" EntityType="astrosModel.rosters_lahman" />
+    <EntitySet Name="parks" EntityType="astrosModel.park" />
+  </EntityContainer>
+  <EntityType Name="league_adjustment">
+    <Key>
+      <PropertyRef Name="league" />
+      <PropertyRef Name="season" />
+      <PropertyRef Name="event_code" />
+    </Key>
+    <Property Name="league" Type="String" Nullable="false" />
+    <Property Name="season" Type="Int32" Nullable="false" />
+    <Property Name="event_code" Type="String" Nullable="false" />
+    <Property Name="factor" Type="Decimal" />
+    <Property Name="multiplier" Type="Decimal" />
+  </EntityType>
+  <EntityType Name="park_factor">
+    <Key>
+      <PropertyRef Name="site_id" />
+      <PropertyRef Name="event_code" />
+    </Key>
+    <Property Name="site_id" Type="String" Nullable="false" />
+    <Property Name="event_code" Type="String" Nullable="false" />
+    <Property Name="factor" Type="Decimal" />
+    <Property Name="multiplier" Type="Decimal" />
+  </EntityType>
+  <EntityType Name="player_splits">
+    <Key>
+      <PropertyRef Name="retro_id" />
+      <PropertyRef Name="season" />
+    </Key>
+    <Property Name="retro_id" Type="String" Nullable="false" />
+    <Property Name="season" Type="Int32" Nullable="false" />
+    <Property Name="split" Type="Decimal" />
+    <Property Name="formula" Type="String" />
+  </EntityType>
+  <EntityType Name="player_stats">
+    <Key>
+      <PropertyRef Name="retro_id" />
+      <PropertyRef Name="season" />
+      <PropertyRef Name="vs_pitcher_side" />
+    </Key>
+    <Property Name="retro_id" Type="String" Nullable="false" />
+    <Property Name="season" Type="Int32" Nullable="false" />
+    <Property Name="vs_pitcher_side" Type="String" Nullable="false" />
+    <Property Name="pa" Type="Decimal" />
+    <Property Name="singles" Type="Decimal" />
+    <Property Name="doubles" Type="Decimal" />
+    <Property Name="triples" Type="Decimal" />
+    <Property Name="homeruns" Type="Decimal" />
+    <Property Name="walks" Type="Decimal" />
+    <Property Name="hitbypitch" Type="Decimal" />
+    <Property Name="nonk" Type="Decimal" />
+    <Property Name="strikeouts" Type="Decimal" />
+    <Property Name="batting_average" Type="Decimal" />
+    <Property Name="on_base_percentage" Type="Decimal" />
+    <Property Name="ops" Type="Decimal" />
+  </EntityType>
+  <EntityType Name="roster">
+    <Key>
+      <PropertyRef Name="retro_id" />
+    </Key>
+    <Property Name="retro_id" Type="String" Nullable="false" />
+    <Property Name="last_name" Type="String" />
+    <Property Name="first_name" Type="String" />
+    <Property Name="throw_side" Type="String" />
+    <Property Name="bat_side" Type="String" />
+    <Property Name="team_id" Type="String" />
+    <Property Name="position" Type="String" />
+  </EntityType>
+  <EntityType Name="rosters_lahman">
+    <Key>
+      <PropertyRef Name="retro_id" />
+    </Key>
+    <Property Name="retro_id" Type="String" Nullable="false" />
+    <Property Name="lahman_id" Type="Int32" />
+    <Property Name="birth_date" Type="DateTime" />
+  </EntityType>
+  <EntityType Name="park">
+    <Key>
+      <PropertyRef Name="site_id" />
+    </Key>
+    <Property Type="String" Name="site_id" Nullable="false" />
+    <Property Type="String" Name="name" />
+  </EntityType>
+</Schema>

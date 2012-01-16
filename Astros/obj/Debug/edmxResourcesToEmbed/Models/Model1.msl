@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="astrosModelStoreContainer" CdmEntityContainer="astrosEntities">
+    <EntitySetMapping Name="league_adjustment">
+      <EntityTypeMapping TypeName="astrosModel.league_adjustment">
+        <MappingFragment StoreEntitySet="league_adjustment">
+          <ScalarProperty Name="league" ColumnName="league" />
+          <ScalarProperty Name="season" ColumnName="season" />
+          <ScalarProperty Name="event_code" ColumnName="event_code" />
+          <ScalarProperty Name="factor" ColumnName="factor" />
+          <ScalarProperty Name="multiplier" ColumnName="multiplier" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="park_factor">
+      <EntityTypeMapping TypeName="astrosModel.park_factor">
+        <MappingFragment StoreEntitySet="park_factor">
+          <ScalarProperty Name="site_id" ColumnName="site_id" />
+          <ScalarProperty Name="event_code" ColumnName="event_code" />
+          <ScalarProperty Name="factor" ColumnName="factor" />
+          <ScalarProperty Name="multiplier" ColumnName="multiplier" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="player_splits">
+      <EntityTypeMapping TypeName="astrosModel.player_splits">
+        <MappingFragment StoreEntitySet="player_splits">
+          <ScalarProperty Name="retro_id" ColumnName="retro_id" />
+          <ScalarProperty Name="season" ColumnName="season" />
+          <ScalarProperty Name="split" ColumnName="split" />
+          <ScalarProperty Name="formula" ColumnName="formula" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="player_stats">
+      <EntityTypeMapping TypeName="astrosModel.player_stats">
+        <MappingFragment StoreEntitySet="player_stats">
+          <ScalarProperty Name="retro_id" ColumnName="retro_id" />
+          <ScalarProperty Name="season" ColumnName="season" />
+          <ScalarProperty Name="vs_pitcher_side" ColumnName="vs_pitcher_side" />
+          <ScalarProperty Name="pa" ColumnName="pa" />
+          <ScalarProperty Name="singles" ColumnName="singles" />
+          <ScalarProperty Name="doubles" ColumnName="doubles" />
+          <ScalarProperty Name="triples" ColumnName="triples" />
+          <ScalarProperty Name="homeruns" ColumnName="homeruns" />
+          <ScalarProperty Name="walks" ColumnName="walks" />
+          <ScalarProperty Name="hitbypitch" ColumnName="hitbypitch" />
+          <ScalarProperty Name="nonk" ColumnName="nonk" />
+          <ScalarProperty Name="strikeouts" ColumnName="strikeouts" />
+          <ScalarProperty Name="batting_average" ColumnName="batting_average" />
+          <ScalarProperty Name="on_base_percentage" ColumnName="on_base_percentage" />
+          <ScalarProperty Name="ops" ColumnName="ops" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosters">
+      <EntityTypeMapping TypeName="astrosModel.roster">
+        <MappingFragment StoreEntitySet="rosters">
+          <ScalarProperty Name="retro_id" ColumnName="retro_id" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="throw_side" ColumnName="throw_side" />
+          <ScalarProperty Name="bat_side" ColumnName="bat_side" />
+          <ScalarProperty Name="team_id" ColumnName="team_id" />
+          <ScalarProperty Name="position" ColumnName="position" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rosters_lahman">
+      <EntityTypeMapping TypeName="astrosModel.rosters_lahman">
+        <MappingFragment StoreEntitySet="rosters_lahman">
+          <ScalarProperty Name="retro_id" ColumnName="retro_id" />
+          <ScalarProperty Name="lahman_id" ColumnName="lahman_id" />
+          <ScalarProperty Name="birth_date" ColumnName="birth_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="parks">
+      <EntityTypeMapping TypeName="astrosModel.park">
+        <MappingFragment StoreEntitySet="parks">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="site_id" ColumnName="site_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

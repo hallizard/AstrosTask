@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="astrosModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="astrosModelStoreContainer">
+    <EntitySet Name="league_adjustment" EntityType="astrosModel.Store.league_adjustment" store:Type="Tables" Schema="astros" />
+    <EntitySet Name="park_factor" EntityType="astrosModel.Store.park_factor" store:Type="Tables" Schema="astros" />
+    <EntitySet Name="parks" EntityType="astrosModel.Store.parks" store:Type="Tables" Schema="astros" />
+    <EntitySet Name="player_splits" EntityType="astrosModel.Store.player_splits" store:Type="Tables" Schema="astros" />
+    <EntitySet Name="player_stats" EntityType="astrosModel.Store.player_stats" store:Type="Tables" Schema="astros" />
+    <EntitySet Name="rosters" EntityType="astrosModel.Store.rosters" store:Type="Tables" Schema="astros" />
+    <EntitySet Name="rosters_lahman" EntityType="astrosModel.Store.rosters_lahman" store:Type="Tables" Schema="astros" />
+  </EntityContainer>
+  <EntityType Name="league_adjustment">
+    <Key>
+      <PropertyRef Name="league" />
+      <PropertyRef Name="season" />
+      <PropertyRef Name="event_code" />
+    </Key>
+    <Property Name="league" Type="char" Nullable="false" MaxLength="1" />
+    <Property Name="season" Type="int" Nullable="false" />
+    <Property Name="event_code" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="factor" Type="decimal" Precision="6" Scale="3" />
+    <Property Name="multiplier" Type="decimal" Precision="6" Scale="3" />
+  </EntityType>
+  <EntityType Name="park_factor">
+    <Key>
+      <PropertyRef Name="site_id" />
+      <PropertyRef Name="event_code" />
+    </Key>
+    <Property Name="site_id" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="event_code" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="factor" Type="decimal" Precision="6" Scale="3" />
+    <Property Name="multiplier" Type="decimal" Precision="6" Scale="3" />
+  </EntityType>
+  <EntityType Name="parks">
+    <Key>
+      <PropertyRef Name="site_id" />
+    </Key>
+    <Property Name="site_id" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="player_splits">
+    <Key>
+      <PropertyRef Name="retro_id" />
+      <PropertyRef Name="season" />
+    </Key>
+    <Property Name="retro_id" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="season" Type="int" Nullable="false" />
+    <Property Name="split" Type="decimal" />
+    <Property Name="formula" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="player_stats">
+    <Key>
+      <PropertyRef Name="retro_id" />
+      <PropertyRef Name="season" />
+      <PropertyRef Name="vs_pitcher_side" />
+    </Key>
+    <Property Name="retro_id" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="season" Type="int" Nullable="false" />
+    <Property Name="vs_pitcher_side" Type="char" Nullable="false" MaxLength="1" />
+    <Property Name="pa" Type="decimal" />
+    <Property Name="singles" Type="decimal" />
+    <Property Name="doubles" Type="decimal" />
+    <Property Name="triples" Type="decimal" />
+    <Property Name="homeruns" Type="decimal" />
+    <Property Name="walks" Type="decimal" />
+    <Property Name="hitbypitch" Type="decimal" />
+    <Property Name="nonk" Type="decimal" />
+    <Property Name="strikeouts" Type="decimal" />
+    <Property Name="batting_average" Type="decimal" Precision="4" Scale="3" />
+    <Property Name="on_base_percentage" Type="decimal" Precision="4" Scale="3" />
+    <Property Name="ops" Type="decimal" Precision="4" Scale="3" />
+  </EntityType>
+  <EntityType Name="rosters">
+    <Key>
+      <PropertyRef Name="retro_id" />
+    </Key>
+    <Property Name="retro_id" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="last_name" Type="varchar" MaxLength="45" />
+    <Property Name="first_name" Type="varchar" MaxLength="45" />
+    <Property Name="throw_side" Type="char" MaxLength="1" />
+    <Property Name="bat_side" Type="char" MaxLength="1" />
+    <Property Name="team_id" Type="varchar" MaxLength="5" />
+    <Property Name="position" Type="varchar" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="rosters_lahman">
+    <Key>
+      <PropertyRef Name="retro_id" />
+    </Key>
+    <Property Name="retro_id" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="lahman_id" Type="int" />
+    <Property Name="birth_date" Type="date" />
+  </EntityType>
+</Schema>

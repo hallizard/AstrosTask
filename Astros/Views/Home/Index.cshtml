@@ -1,0 +1,342 @@
+﻿@{
+    ViewBag.Title = "Houston Astros Interview Task";
+}
+<body>
+    <div class="main">
+        <div class="spinner"><img src="../../Content/images/loading.gif" /></div>
+        <div class="logo"><img width="200px" src="../../Content/images/astros_logo.jpg" /></div>
+        <div class="title"><img src="../../Content/images/title.png" /></div>
+    
+        <div class="table-header">
+            <div class="link park selected">Park Factors</div>
+            <div class="link league">League Factors</div>
+            <div class="link demo">Demonstrated Success</div>
+            <div class="link split">L vs R Splits</div>
+        </div>
+        <div class="content">
+            
+        </div>
+    </div>
+</body>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".park").click(function () {
+            ClearSelections();
+            $(".park").addClass("selected");
+            LoadParkFactors();
+        });
+
+        $(".league").click(function () {
+            ClearSelections();
+            $(".league").addClass("selected");
+            LoadLeagueFactors();
+        });
+
+        $(".demo").click(function () {
+            ClearSelections();
+            $(".demo").addClass("selected");
+            LoadDemoSuccess();
+        });
+
+        $(".split").click(function () {
+            ClearSelections();
+            $(".split").addClass("selected");
+            LoadPlayerSplits();
+        });
+
+        ClearSelections = function () {
+            $(".content").empty();
+            $(".link").removeClass("selected");
+        };
+
+        LoadParkFactors = function (event) {
+            ShowSpinner();
+
+            if (!event) {
+                event = 'HR';
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "Home/GetParkFactors",
+                async: false,
+                data: "q=" + event,
+                dataType: "json",
+                success: function (data) {
+                    var newhtml = "<table class='table-data'><tr><th class='wider'>Park</th><th>Retro Park ID</th><th>Event Code</th><th>Factor</th></tr>",
+                        i,
+                        odd = false;
+
+                    for (i = 0; i < data.length; i++) {
+                        if (odd) {
+                            newhtml += "<tr class='odd'>";
+                            odd = false;
+                        } else {
+                            newhtml += "<tr>";
+                            odd = true;
+                        }
+
+                        var eventString = '-';
+                        if (data[i].ev === 'HR') {
+                            eventString = 'Home Run';
+                        } else if (data[i].ev === 'T') {
+                            eventString = 'Triple';
+                        } else if (data[i].ev === 'D') {
+                            eventString = 'Double';
+                        } else if (data[i].ev === 'S') {
+                            eventString = 'Single';
+                        } else if (data[i].ev === 'K') {
+                            eventString = 'Strikeout';
+                        } else if (data[i].ev === 'W') {
+                            eventString = 'Walk';
+                        } else if (data[i].ev === 'HP') {
+                            eventString = 'Hit By Pitch';
+                        } else if (data[i].ev === 'NK') {
+                            eventString = '-';
+                        }
+
+                        if (eventString !== '-') {
+                            newhtml += "<td>" + data[i].name + "</td><td>" + data[i].retro_id + "</td><td>" + eventString + "</td><td>" + data[i].factor + "</td></tr>";
+                        }
+
+                    }
+
+                    // Create dropdown for event
+                    var drophtml = 'Filter by Event: <select id="event_code" style="width:180px;"></select><br><br>';
+                    $(".content").html(drophtml);
+
+                    $("<option>").attr("value", 'HR').text('Home Run').appendTo("#event_code");
+                    $("<option>").attr("value", 'T').text('Triple').appendTo("#event_code");
+                    $("<option>").attr("value", 'D').text('Double').appendTo("#event_code");
+                    $("<option>").attr("value", 'S').text('Single').appendTo("#event_code");
+                    $("<option>").attr("value", 'W').text('Walk').appendTo("#event_code");
+                    $("<option>").attr("value", 'HP').text('Hit By Pitch').appendTo("#event_code");
+                    $("<option>").attr("value", 'K').text('Strikeout').appendTo("#event_code");
+
+                    $("#event_code").val(event);
+
+                    $("#event_code").change(function () {
+                        LoadParkFactors($("#event_code").val());
+                    });
+
+                    HideSpinner();
+                    $(".content").append(newhtml);
+                }
+            });
+        };
+
+        LoadLeagueFactors = function (event) {
+            ShowSpinner();
+
+            if (!event) {
+                event = 'HR';
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "Home/GetLeagueFactors",
+                async: false,
+                data: "q=" + event,
+                dataType: "json",
+                success: function (data) {
+                    var newhtml = "<table class='table-data'><tr><th class='wider'>League</th><th>Event Code</th><th>Season</th><th>Factor</th></tr>",
+                        i,
+                        odd = false;
+
+                    for (i = 0; i < data.length; i++) {
+                        if (odd) {
+                            newhtml += "<tr class='odd'>";
+                            odd = false;
+                        } else {
+                            newhtml += "<tr>";
+                            odd = true;
+                        }
+
+                        var eventString = '-';
+                        if (data[i].ev === 'HR') {
+                            eventString = 'Home Run';
+                        } else if (data[i].ev === 'T') {
+                            eventString = 'Triple';
+                        } else if (data[i].ev === 'D') {
+                            eventString = 'Double';
+                        } else if (data[i].ev === 'S') {
+                            eventString = 'Single';
+                        } else if (data[i].ev === 'K') {
+                            eventString = 'Strikeout';
+                        } else if (data[i].ev === 'W') {
+                            eventString = 'Walk';
+                        } else if (data[i].ev === 'HP') {
+                            eventString = 'Hit By Pitch';
+                        } else if (data[i].ev === 'NK') {
+                            eventString = '-';
+                        }
+
+                        var leagueString = '-';
+                        if (data[i].name === 'A') {
+                            leagueString = 'American';
+                        } else {
+                            leagueString = 'National';
+                        }
+
+                        if (eventString !== '-') {
+                            newhtml += "<td>" + leagueString + "</td><td>" + eventString + "</td><td>" + data[i].season + "</td><td>" + data[i].factor + "</td></tr>";
+                        }
+
+                    }
+
+                    // Create dropdown for event
+                    var drophtml = 'Filter by Event: <select id="event_code" style="width:180px;"></select><br><br>';
+                    $(".content").html(drophtml);
+
+                    $("<option>").attr("value", 'HR').text('Home Run').appendTo("#event_code");
+                    $("<option>").attr("value", 'T').text('Triple').appendTo("#event_code");
+                    $("<option>").attr("value", 'D').text('Double').appendTo("#event_code");
+                    $("<option>").attr("value", 'S').text('Single').appendTo("#event_code");
+                    $("<option>").attr("value", 'W').text('Walk').appendTo("#event_code");
+                    $("<option>").attr("value", 'HP').text('Hit By Pitch').appendTo("#event_code");
+                    $("<option>").attr("value", 'K').text('Strikeout').appendTo("#event_code");
+
+                    $("#event_code").val(event);
+
+                    $("#event_code").change(function () {
+                        LoadLeagueFactors($("#event_code").val());
+                    });
+
+                    HideSpinner();
+                    $(".content").append(newhtml);
+                }
+            });
+        };
+
+        LoadDemoSuccess = function (retro_id, throw_side) {
+            ShowSpinner();
+
+            if (!throw_side) {
+                throw_side = 'B';
+            }
+
+            if (retro_id) {
+
+                $.ajax({
+                    type: "GET",
+                    url: "Home/GetDemoSuccess",
+                    async: false,
+                    data: "q=" + retro_id + "&t=" + throw_side,
+                    dataType: "json",
+                    success: function (data) {
+                        var newhtml = "<table class='table-data'><tr><th class='wider'>Player</th><th>Retro ID</th><th>Age</th><th>Pitcher Side</th><th class='thin'>PA</th>" +
+                                      "<th class='thin'>1B</th><th class='thin'>2B</th><th class='thin'>3B</th><th class='thin'>HR</th><th class='thin'>BB</th>" +
+                                      "<th class='thin'>HBP</th><th class='thin'>K</th><th class='thin'>NK</th>" +
+                                      "<th class='thin'>AVG</th><th class='thin'>OBP</th><th class='thin'>OPS</th></tr>",
+                            i,
+                            odd = false;
+
+                        for (i = 0; i < data.length; i++) {
+                            if (odd) {
+                                newhtml += "<tr class='odd'>";
+                                odd = false;
+                            } else {
+                                newhtml += "<tr>";
+                                odd = true;
+                            }
+
+                            newhtml += "<tr><td>" + data[i].name + "</td><td>" + data[i].id + "</td><td>" + data[i].bday + "</td><td>" + data[i].side + "</td><td>" + data[i].pa + "</td><td>" + data[i].s + "</td><td>" +
+                                      data[i].d + "</td><td>" + data[i].t + "</td><td>" + data[i].hr + "</td><td>" + data[i].w + "</td><td>" + data[i].hp + "</td><td>" + data[i].k + "</td><td>" +
+                                      data[i].nk + "</td><td>" + data[i].ba + "</td><td>" + data[i].obp + "</td><td>" + data[i].ops + "</td></tr>";
+
+                        }
+
+                        // Create dropdown for event
+                        var texthtml = "Enter Retro Player ID (ex: polap001): <input type='text' id='retro_id' style='width: 200px;' />" +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pitcher Side: <select id="throw_side" style="width:180px;"></select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id="viewdata">View Data</button><br><br>';
+                        $(".content").html(texthtml);
+
+                        $("<option>").attr("value", 'B').text('Both').appendTo("#throw_side");
+                        $("<option>").attr("value", 'L').text('vs Left').appendTo("#throw_side");
+                        $("<option>").attr("value", 'R').text('vs Right').appendTo("#throw_side");
+
+                        $("#throw_side").val(throw_side);
+                        $("#retro_id").val(retro_id);
+
+                        $("#viewdata").click(function () {
+                            LoadDemoSuccess($("#retro_id").val(), $("#throw_side").val());
+                        });
+
+                        HideSpinner();
+
+                        if (data.length === 0) {
+                            $(".content").append("<br><h3>Retro Player ID not found!</h3>");
+                        } else {
+                            $(".content").append(newhtml);
+                        }
+                    }
+                });
+            } else {
+                // no ID sent in, just show a note to enter one
+                var texthtml = "Enter Retro Player ID (ex: polap001): <input type='text' id='retro_id' style='width: 200px;' />" +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pitcher Side: <select id="throw_side" style="width:180px;"></select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id="viewdata">View Data</button><br><br><br><h2>Please Enter a Retro Player ID.</h2>';
+                $(".content").html(texthtml);
+
+                $("<option>").attr("value", 'B').text('Both').appendTo("#throw_side");
+                $("<option>").attr("value", 'L').text('vs Left').appendTo("#throw_side");
+                $("<option>").attr("value", 'R').text('vs Right').appendTo("#throw_side");
+
+                $("#throw_side").val(throw_side);
+
+                $("#viewdata").click(function () {
+                    LoadDemoSuccess($("#retro_id").val(), $("#throw_side").val());
+                });
+
+                HideSpinner();
+            }
+        };
+
+        LoadPlayerSplits = function () {
+            ShowSpinner();
+
+            $.ajax({
+                type: "GET",
+                url: "Home/GetPlayerSplits",
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    var newhtml = "<table class='table-data'><tr><th class='wider'>Player</th><th>Retro ID</th><th class='thin'>OPS vs L</th><th class='thin'>OPS vs R</th><th class='thin'>Split</th><th class='wider'>Formula</th></tr>",
+                        i,
+                        odd = false;
+
+                    for (i = 0; i < data.length; i++) {
+                        if (odd) {
+                            newhtml += "<tr class='odd'>";
+                            odd = false;
+                        } else {
+                            newhtml += "<tr>";
+                            odd = true;
+                        }
+
+                        newhtml += "<td>" + data[i].name + "</td><td>" + data[i].id + "</td><td>" + data[i].vsl + "</td><td>" + data[i].vsr + "</td><td>" + data[i].split + "</td><td>" + data[i].formula + "</td></tr>";
+                    }
+
+                    HideSpinner();
+                    $(".content").html(newhtml);
+                }
+            });
+        };
+
+        ShowSpinner = function () {
+            $(".spinner").attr("style", "display:block");
+        };
+
+        HideSpinner = function () {
+            $(".spinner").attr("style", "display:none");
+        };
+
+        // Items to run on page load
+        LoadParkFactors();
+
+    });
+
+</script>
